@@ -1,38 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.Examples;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float moveSpeed = 1f;
+    [SerializeField] float speed = 0.0001f;
+    Vector3 mousePos, transPos, targetPos;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(1))
+            CalTargetPos();
+
+            MoveToTarget();
     }
 
-    void FixedUpdate() {
-        Move();
+    void CalTargetPos()
+    {
+        mousePos = Input.mousePosition;
+        transPos = Camera.main.ScreenToWorldPoint(mousePos);
+        targetPos = new Vector3(transPos.x, transPos.y, 0);
     }
 
-    void Move() {
-        Vector3 movePosition = Vector3.zero;
-
-        if(Input.GetAxisRaw("Horizontal") < 0) {
-            movePosition = Vector3.left;
-        }
-        else if(Input.GetAxisRaw("Horizontal") > 0) {
-            movePosition = Vector3.right;
-        }
-
-        transform.position += movePosition * moveSpeed * Time.deltaTime;
+    void MoveToTarget()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime + speed);
     }
 }
