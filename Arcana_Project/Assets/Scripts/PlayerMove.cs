@@ -5,23 +5,43 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] float speed = 0.0001f;
-    Vector3 mousePos, transPos, targetPos;
-    SpriteRenderer spriter;
-    Animator anim;
-    private Vector3 m_LastPosition;
+    [SerializeField]
+    float speed;
 
-    void Start()
+    Vector3 mousePos, transPos, targetPos;
+
+    Vector3 m_LastPosition;
+
+    SpriteRenderer spriter;
+
+    Animator anim;
+
+    void Awake()
     {
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        targetPos = this.transform.position;
     }
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
+        {
             CalTargetPos();
+        }
 
-            MoveToTarget();
+        MoveToTarget();
+    }
+
+    void FixedUpdate()
+    {
+        anim.SetFloat("Speed", GetSpeed());
+        // 이동하는 방향으로 뒤집기
+        if (transPos.x != 0)
+        {
+            spriter.flipX = transPos.x - transform.position.x < 0;
+        }
     }
 
     void CalTargetPos()
@@ -33,16 +53,7 @@ public class PlayerMove : MonoBehaviour
 
     void MoveToTarget()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime + speed);
-    }
-
-    void FixedUpdate()
-    {
-        anim.SetFloat("Speed", GetSpeed());
-        // 이동하는 방향으로 뒤집기
-        if (transPos.x != 0) {
-            spriter.flipX = transPos.x - transform.position.x < 0;
-        }
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
     }
 
     float GetSpeed()
