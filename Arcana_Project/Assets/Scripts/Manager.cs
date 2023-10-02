@@ -33,12 +33,19 @@ public class Manager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom() 
     {
         LoginPanel.SetActive(false);
+        Spawn();
     }
     // Update is called once per frame
 
     void Update() 
     {
         if (Input.GetKeyDown(KeyCode.Escape) && PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
+    }
+
+    public void Spawn()
+    {
+        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        //RespawnPanel.SetActive(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)

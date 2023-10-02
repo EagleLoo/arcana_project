@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TMPro.Examples;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField]
     float speed;
+    public PhotonView PV;
+    public TMP_Text NickNameText;
+    public Image HealthImage;
 
     Vector3 mousePos, transPos, targetPos;
-
     Vector3 m_LastPosition;
-
     SpriteRenderer spriter;
-
     Animator anim;
 
     void Awake()
@@ -22,11 +26,14 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponent<Animator>();
 
         targetPos = this.transform.position;
+
+        NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
+        NickNameText.color = PV.IsMine ? Color.green : Color.red;
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (PV.IsMine && Input.GetMouseButton(1))
         {
             CalTargetPos();
         }
