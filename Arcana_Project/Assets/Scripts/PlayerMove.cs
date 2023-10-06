@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
     }
 
-    void Update()
+    void LateUpdate()
     {
         // 마우스 클릭했을 때 나의 캐릭터만 CalTargetPos() 실행
         if (PV.IsMine)
@@ -64,6 +64,6 @@ public class PlayerMove : MonoBehaviour
 
     void MoveToTarget()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 4);
     }  
 }

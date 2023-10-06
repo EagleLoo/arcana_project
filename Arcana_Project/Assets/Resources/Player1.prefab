@@ -218,8 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b0d4c734a073b46b4cbcc3ed350e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
   PV: {fileID: 4700937084856977376}
+  SR: {fileID: 0}
+  AN: {fileID: 0}
   NickNameText: {fileID: 4700937084870044331}
   HealthImage: {fileID: 4236155958672067748}
 --- !u!95 &4700937084856977382
