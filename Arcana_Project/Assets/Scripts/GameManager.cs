@@ -6,13 +6,15 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Photon.Chat.UtilityScripts;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public TMP_InputField NickNameInput;
     public GameObject LoginPanel;
-    public CardManager Card;
-    
+    public Toggle WarToggle;
+    public Toggle WizToggle;
+ 
     void Awake()
     {
         Screen.SetResolution(960, 540, false);
@@ -45,8 +47,12 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Spawn()
     {
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        if (WarToggle.isOn)
+            PhotonNetwork.Instantiate("Player1", Vector3.zero, Quaternion.identity);
+        else if (WizToggle.isOn)
+            PhotonNetwork.Instantiate("Player2", Vector3.zero, Quaternion.identity);
         //RespawnPanel.SetActive(false);
+        
     }
 
     public override void OnDisconnected(DisconnectCause cause)
