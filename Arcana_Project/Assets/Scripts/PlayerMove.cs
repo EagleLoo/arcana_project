@@ -6,51 +6,55 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Chat.Demo;
 
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField]
-    float speed;
+    
     public PhotonView PV;
+    public SpriteRenderer SR;
+    public Animator AN;
     public TMP_Text NickNameText;
     public Image HealthImage;
-
     Vector3 mousePos, transPos, targetPos;
-    Vector3 m_LastPosition;
-    SpriteRenderer spriter;
-    Animator anim;
 
     void Awake()
     {
-        spriter = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-
+        // 타겟을 현재 위치로 하여 고정
         targetPos = this.transform.position;
 
+        // 자신의 닉네임은 초록색, 적의 닉네임은 빨간색
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
     }
 
     void Update()
     {
-        if (PV.IsMine && Input.GetMouseButton(1))
+        // 마우스 클릭했을 때 나의 캐릭터만 CalTargetPos() 실행
+        if (PV.IsMine)
         {
+            if(Input.GetMouseButton(1))
             CalTargetPos();
+            Vector2 dis = targetPos - transform.position;
+            
+            if (dis.magnitude != 0)
+            {
+                AN.SetBool("walk", true);
+                PV.RPC("FlipXRPC", RpcTarget.AllBuffered, dis.x);
+            }
+            else AN.SetBool("walk", false);
         }
 
         MoveToTarget();
     }
 
-    void FixedUpdate()
+    [PunRPC]
+    void FlipXRPC(float x)
     {
-        anim.SetFloat("Speed", GetSpeed());
-        // 이동하는 방향으로 뒤집기
-        if (transPos.x != 0)
-        {
-            spriter.flipX = transPos.x - transform.position.x < 0;
-        }
+     SR.flipX = x < 0;
     }
-
+    // 마우스가 클릭한 방향으로 이동
     void CalTargetPos()
     {
         mousePos = Input.mousePosition;
@@ -61,13 +65,5 @@ public class PlayerMove : MonoBehaviour
     void MoveToTarget()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
-    }
-
-    float GetSpeed()
-    {
-        float speed = (((transform.position - m_LastPosition).magnitude)/Time.deltaTime);
-        m_LastPosition = transform.position;
-
-        return speed;
-    }
+    }  
 }
