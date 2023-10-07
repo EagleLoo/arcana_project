@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     public TMP_InputField NickNameInput;
     public GameObject LoginPanel;
+    public GameObject WinnerPanel;
+    public GameObject LosePanel;
     public Toggle WarToggle;
     public Toggle WizToggle;
  
@@ -42,19 +44,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Update() 
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
+        if (Input.GetKeyDown(KeyCode.Escape) && PhotonNetwork.IsConnected) QuitGame();
     }
 
     public void Spawn()
     {
+        // 캐릭터 선택
         if (WarToggle.isOn)
             PhotonNetwork.Instantiate("Player1", Vector3.zero, Quaternion.identity);
         else if (WizToggle.isOn)
             PhotonNetwork.Instantiate("Player2", Vector3.zero, Quaternion.identity);
-        //RespawnPanel.SetActive(false);
-        
     }
 
+    public void QuitGame()
+    {
+        if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
+        WinnerPanel.SetActive(false);
+        LosePanel.SetActive(false);
+    }
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 로그인 패널 활성화
