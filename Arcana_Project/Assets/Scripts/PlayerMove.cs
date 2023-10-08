@@ -8,6 +8,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Chat.Demo;
 
+
+
 public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 {
     public PhotonView PV;
@@ -17,6 +19,17 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public Image HealthImage;
     Vector3 mousePos, transPos, targetPos;
     Vector3 curPos;
+    private KeyCode[] keyCodes = {
+        KeyCode.Q,
+        KeyCode.W,
+        KeyCode.E,
+        KeyCode.R,
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5,
+    };
 
     void Awake()
     {
@@ -44,7 +57,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             }
             else AN.SetBool("walk", false);
 
-            // 전사 베기
+            // 다른 스킬 시전 중이 아닐때
+            
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 PhotonNetwork.Instantiate("Sword", transform.position + new Vector3(SR.flipX ? -0.4f : 0.4f, -0.11f, 0), Quaternion.identity);
@@ -53,6 +67,15 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 targetPos = transform.position;
             }
 
+            for(int i = 0 ; i < 9; i ++ ){
+                if(Input.GetKeyDown(keyCodes[i])) 
+                {
+                    int numberPressed = i+1;
+                    Debug.Log(numberPressed);
+                }
+            }
+
+            
             MoveToTarget();
         }
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;

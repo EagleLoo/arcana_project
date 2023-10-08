@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     public TMP_InputField NickNameInput;
     public GameObject LoginPanel;
     public GameObject WinnerPanel;
+    public GameObject DeckPanel;
+    public GameObject SwordImage;
+    public GameObject WandImage;
     public GameObject LosePanel;
     public Toggle WarToggle;
     public Toggle WizToggle;
@@ -37,7 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     
     public override void OnJoinedRoom() 
     {
-        LoginPanel.SetActive(false);
+        DeckPanel.SetActive(false);
         Spawn();
     }
     // Update is called once per frame
@@ -56,12 +59,37 @@ public class GameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.Instantiate("Player2", Vector3.zero, Quaternion.identity);
     }
 
+    public void DeckOpen()
+    {
+        DeckPanel.SetActive(true);
+        LoginPanel.SetActive(false);
+    }
+
+    public void DeckQuit()
+    {
+        DeckPanel.SetActive(false);
+        LoginPanel.SetActive(true);
+    }
+
     public void QuitGame()
     {
         if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
         WinnerPanel.SetActive(false);
         LosePanel.SetActive(false);
     }
+
+    public void WarriorWeapon()
+    {
+        SwordImage.SetActive(true);
+        WandImage.SetActive(false);
+    }
+
+    public void WizardWeapon()
+    {
+        SwordImage.SetActive(false);
+        WandImage.SetActive(true);
+    }
+
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 로그인 패널 활성화
