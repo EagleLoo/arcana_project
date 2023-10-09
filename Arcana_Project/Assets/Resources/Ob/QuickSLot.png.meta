@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f00b5bc825858e8408b1111da112ffc7
+guid: 0b7c0c0e60bd14441af1210aa0a575d6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,175 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SA_Card_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 47475a62624e44141ba63411bc341df1
-      internalID: 1018280228
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d88ab33344505d442bbfc984a6bbe775
-      internalID: 1577108245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b926d556e72031f48b7e951c9da2cfe1
-      internalID: -392660536
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc82990b28838124a8ab03755d64b72f
-      internalID: 1696109010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5715d2cfb9ba6be49a792799fd8f6cc4
-      internalID: -211200880
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c9cc56c31598f72449256ed64cf9ef71
-      internalID: -1665943955
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_6
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a448f474918e8ed479352a910b44e499
-      internalID: 934189784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_7
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 027f45611cf2b8e44b5f9b64a323f229
-      internalID: -1738810689
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SA_Card_8
+      name: QuickSLot_0
       rect:
         serializedVersion: 2
         x: 0
@@ -287,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e6f160ca1d73a64081d4d8e6c7485b2
-      internalID: -270779676
+      spriteID: f6e5603f45c0cfb4aa42a446bfcd211d
+      internalID: -1583416874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_9
+      name: QuickSLot_1
       rect:
         serializedVersion: 2
         x: 64
@@ -308,8 +140,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0113a8e5d0051e845b7a403ba832a31d
-      internalID: -847683306
+      spriteID: 10298f123a1f8154f97ea5751d7687ac
+      internalID: -312837532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuickSLot_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f5a096630b5745409ac89839b6ac5e7
+      internalID: 933997739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QuickSLot_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409ca9419a2a1ca4ea6b42320ce3a8a2
+      internalID: 864828843
       vertices: []
       indices: 
       edges: []
@@ -325,16 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SA_Card_0: 1018280228
-      SA_Card_1: 1577108245
-      SA_Card_2: -392660536
-      SA_Card_3: 1696109010
-      SA_Card_4: -211200880
-      SA_Card_5: -1665943955
-      SA_Card_6: 934189784
-      SA_Card_7: -1738810689
-      SA_Card_8: -270779676
-      SA_Card_9: -847683306
+      QuickSLot_0: -1583416874
+      QuickSLot_1: -312837532
+      QuickSLot_2: 933997739
+      QuickSLot_3: 864828843
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

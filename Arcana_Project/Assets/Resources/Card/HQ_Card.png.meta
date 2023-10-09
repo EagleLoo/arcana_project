@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f00b5bc825858e8408b1111da112ffc7
+guid: 1b64d5d68899c604f9a60abcedbebc4f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SA_Card_0
+      name: HQ_Card_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 599869e1f5d607d468e2287cd5ff165a
+      internalID: -240438291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HQ_Card_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b23b57b33fc8f4541b072e986dae8e49
+      internalID: 1409344815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HQ_Card_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb9cc80737dcc1a46be7a0b2f409bc05
+      internalID: 263918708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HQ_Card_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23dd9fc222c6de447b8731ef4c78fd7d
+      internalID: -254517129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HQ_Card_4
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47475a62624e44141ba63411bc341df1
-      internalID: 1018280228
+      spriteID: 6183f07d0fd7b8b4ab4fdc8eca6dd351
+      internalID: 27866128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_1
+      name: HQ_Card_5
       rect:
         serializedVersion: 2
         x: 64
@@ -140,14 +224,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d88ab33344505d442bbfc984a6bbe775
-      internalID: 1577108245
+      spriteID: 15ac9234bceca7c468e3d22320835d02
+      internalID: 263922426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_2
+      name: HQ_Card_6
       rect:
         serializedVersion: 2
         x: 128
@@ -161,14 +245,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b926d556e72031f48b7e951c9da2cfe1
-      internalID: -392660536
+      spriteID: efb1e3da36b46fe4ab67b5a31725bc42
+      internalID: -205824434
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_3
+      name: HQ_Card_7
       rect:
         serializedVersion: 2
         x: 192
@@ -182,14 +266,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc82990b28838124a8ab03755d64b72f
-      internalID: 1696109010
+      spriteID: 319d1ceea456cac43afe465ef31eecc1
+      internalID: 759011021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_4
+      name: HQ_Card_8
       rect:
         serializedVersion: 2
         x: 0
@@ -203,14 +287,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5715d2cfb9ba6be49a792799fd8f6cc4
-      internalID: -211200880
+      spriteID: 12319886898554e418857ef259441c4e
+      internalID: 357529829
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_5
+      name: HQ_Card_9
       rect:
         serializedVersion: 2
         x: 64
@@ -224,14 +308,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9cc56c31598f72449256ed64cf9ef71
-      internalID: -1665943955
+      spriteID: 074a1d9ebcf9e1441888a0bd1389ead5
+      internalID: -1197890537
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_6
+      name: HQ_Card_10
       rect:
         serializedVersion: 2
         x: 128
@@ -245,14 +329,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a448f474918e8ed479352a910b44e499
-      internalID: 934189784
+      spriteID: c211cf6bdf0fe1d4d84f73355a3b3861
+      internalID: 34113125
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_7
+      name: HQ_Card_11
       rect:
         serializedVersion: 2
         x: 192
@@ -266,14 +350,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 027f45611cf2b8e44b5f9b64a323f229
-      internalID: -1738810689
+      spriteID: 80f24f4f9f38a9543abd5bf68ee13077
+      internalID: 50987150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_8
+      name: HQ_Card_12
       rect:
         serializedVersion: 2
         x: 0
@@ -287,14 +371,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e6f160ca1d73a64081d4d8e6c7485b2
-      internalID: -270779676
+      spriteID: 8e36a752fc193fc4aa9091f82b8f382b
+      internalID: -510465137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Card_9
+      name: HQ_Card_13
       rect:
         serializedVersion: 2
         x: 64
@@ -308,8 +392,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0113a8e5d0051e845b7a403ba832a31d
-      internalID: -847683306
+      spriteID: b0461f15ddcd77941bd485722b864731
+      internalID: -1944662931
       vertices: []
       indices: 
       edges: []
@@ -325,16 +409,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SA_Card_0: 1018280228
-      SA_Card_1: 1577108245
-      SA_Card_2: -392660536
-      SA_Card_3: 1696109010
-      SA_Card_4: -211200880
-      SA_Card_5: -1665943955
-      SA_Card_6: 934189784
-      SA_Card_7: -1738810689
-      SA_Card_8: -270779676
-      SA_Card_9: -847683306
+      HQ_Card_0: -240438291
+      HQ_Card_1: 1409344815
+      HQ_Card_10: 34113125
+      HQ_Card_11: 50987150
+      HQ_Card_12: -510465137
+      HQ_Card_13: -1944662931
+      HQ_Card_2: 263918708
+      HQ_Card_3: -254517129
+      HQ_Card_4: 27866128
+      HQ_Card_5: 263922426
+      HQ_Card_6: -205824434
+      HQ_Card_7: 759011021
+      HQ_Card_8: 357529829
+      HQ_Card_9: -1197890537
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

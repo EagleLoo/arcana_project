@@ -65,12 +65,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         LoginPanel.SetActive(false);
     }
 
-    public void DeckQuit()
-    {
-        DeckPanel.SetActive(false);
-        LoginPanel.SetActive(true);
-    }
-
     public void QuitGame()
     {
         if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
@@ -78,16 +72,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         LosePanel.SetActive(false);
     }
 
+    // 전사 무기 띄우기
     public void WarriorWeapon()
     {
-        SwordImage.SetActive(true);
         WandImage.SetActive(false);
+        SwordImage.SetActive(true);
     }
 
+    // 마법사 무기 띄우기
     public void WizardWeapon()
     {
-        SwordImage.SetActive(false);
         WandImage.SetActive(true);
+        SwordImage.SetActive(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)

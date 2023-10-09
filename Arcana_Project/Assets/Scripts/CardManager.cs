@@ -9,26 +9,33 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Card
 {
-    public Card(string _Type, string _CardNum, string _Name, string _Power, string _Range, string _Description, bool _isUsing)
+    public Card(string _Type, int _CardNum, string _Name, float _Power, float _Range, string _Description, bool _isUsing)
     {Type = _Type; CardNum = _CardNum; Name = _Name; Power = _Power; Range = _Range; Description = _Description; isUsing = _isUsing;}
-    public string Type, CardNum, Name, Power, Range, Description;   
+    public string Type;
+    public int CardNum;
+    public string Name;
+    public float Power, Range;
+    public string Description;   
     public bool isUsing;
 }
 public class CardManager : MonoBehaviour
 {
     public Toggle WarToggle;
-    public TextMeshProUGUI TextCardName;
-    public TextMeshProUGUI TextCardDes;
     public TextAsset CardDatabase;
-    public List<Card> AllCardList, MyCardList, CurCardList;
-    public int MyDeckNum = 0;
+    public List<Card> AllCardList, MyCardList, StartCardList; 
+    public Image Expand;
+    public Image[] Slot;
+    public Sprite[] SACard;
+    public Sprite[] HQCard;
+    public int[] SlotNum;
+    
     void Start()
     {
        string[] line = CardDatabase.text.Substring(0, CardDatabase.text.Length - 1).Split('\n');
        for (int i = 0; i < line.Length; i++)
        {
             string[] row = line[i].Split('\t');
-            AllCardList.Add(new Card(row[0], row[1], row[2], row[3], row[4], row[5], row[6] == "TRUE"));
+            AllCardList.Add(new Card(row[0], int.Parse(row[1]), row[2], float.Parse(row[3]), float.Parse(row[4]), row[5], row[6] == "TRUE"));
        }
     }
 
@@ -42,30 +49,29 @@ public class CardManager : MonoBehaviour
             tog = "HQ";
         MyCardList = AllCardList.FindAll(x => x.Type == tog);
 
-        TakeCard();
-    }
-
-    public void TakeCard()
-    {
-        TextCardName.text = MyCardList[MyDeckNum].Name;
-        TextCardDes.text = MyCardList[MyDeckNum].Description;
-    }
-
-    public void LeftCard()
-    {
-        MyDeckNum--;
-        if (MyDeckNum < 0)
-            MyDeckNum = 9;
+        for (int i = 0; i < 10; i++) {
             
-        TakeCard();
-        
+            if (tog == "SA")
+                Slot[i].sprite = SACard[i];
+            else
+                Slot[i].sprite = HQCard[i]; 
+        }
     }
 
-    public void RightCard()
+    // 카드 설명 확장
+    public void PointerEnter(int slotNum)
     {
-        MyDeckNum++;
-        if (MyDeckNum > 9)
-            MyDeckNum = 0;
-        TakeCard();
+        Expand.GetComponent<Image>().sprite = Slot[slotNum].GetComponent<Image>().sprite;
+        Expand.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = MyCardList[slotNum].Name;
+        Expand.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = MyCardList[slotNum].Description;
+    }
+
+    public void StartDeck() {
+        StartCardList = MyCardList.FindAll(x => x.isUsing == true);
+    }
+
+    public void Shuffle()
+    {
+
     }
 }
