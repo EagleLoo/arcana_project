@@ -8,10 +8,10 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Chat.Demo;
 
-
-
 public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 {
+    public List<Card> CardList;
+
     public PhotonView PV;
     public SpriteRenderer SR;
     public Animator AN;
@@ -19,17 +19,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public Image HealthImage;
     Vector3 mousePos, transPos, targetPos;
     Vector3 curPos;
-    private KeyCode[] keyCodes = {
-        KeyCode.Q,
-        KeyCode.W,
-        KeyCode.E,
-        KeyCode.R,
-        KeyCode.Alpha1,
-        KeyCode.Alpha2,
-        KeyCode.Alpha3,
-        KeyCode.Alpha4,
-        KeyCode.Alpha5,
-    };
+    float DrawTime, UpdateTime = 0.0f;
+    public int DeckLength;
+    public List<int> DeckList = new List<int>();
+    public List<int> HandList = new List<int>(); 
+    public List<int> CemList = new List<int>(); 
 
     void Awake()
     {
@@ -39,8 +33,32 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         // 자신의 닉네임은 초록색, 적의 닉네임은 빨간색
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
+
+        CardList = GameObject.Find("CardArea").GetComponent<CardManager>().CardDeckList;
+        DeckLength = GameObject.Find("CardArea").GetComponent<CardManager>().CardCnt;
+
+        for (int i = 0; i < DeckLength; i++) 
+        {
+            DeckList.Add(CardList[i].CardNum);
+        }
+        
+        Shuffle(DeckList);
+
+        if (CardList[0].Type == "SA")
+            DrawTime = 2.0f;
+        else
+            DrawTime = 4.0f; 
     }
 
+    void Update() {
+        if(UpdateTime > DrawTime)
+        {
+            UpdateTime = 0.0f;
+
+        }
+        else UpdateTime += Time.deltaTime;
+
+    }
     void LateUpdate()
     {
         // 마우스 클릭했을 때 나의 캐릭터만 CalTargetPos() 실행
@@ -56,9 +74,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 PV.RPC("FlipXRPC", RpcTarget.AllBuffered, dis.x);
             }
             else AN.SetBool("walk", false);
-
-            // 다른 스킬 시전 중이 아닐때
             
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 PhotonNetwork.Instantiate("Sword", transform.position + new Vector3(SR.flipX ? -0.4f : 0.4f, -0.11f, 0), Quaternion.identity);
@@ -66,15 +83,38 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 AN.SetTrigger("HorizonLob");
                 targetPos = transform.position;
             }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
 
-            for(int i = 0 ; i < 9; i ++ ){
-                if(Input.GetKeyDown(keyCodes[i])) 
-                {
-                    int numberPressed = i+1;
-                    Debug.Log(numberPressed);
-                }
             }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
 
+            }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+
+            }
             
             MoveToTarget();
         }
@@ -136,6 +176,18 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 4);
     }  
 
+    public List<T> Shuffle<T>(List<T> _list) {
+        for (int i = _list.Count - 1; i > 0; i--)
+        {
+            int rnd = UnityEngine.Random.Range(0, i);
+
+            T temp = _list[i];
+            _list[i] = _list[rnd];
+            _list[rnd] = temp;
+        }
+
+        return _list;
+    }
     // -------------------------------------------- 전사 스킬 --------------------------------------------
    
     

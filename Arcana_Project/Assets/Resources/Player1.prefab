@@ -280,11 +280,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b0d4c734a073b46b4cbcc3ed350e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CardList: []
   PV: {fileID: 7708745503070746092}
   SR: {fileID: 7708745503070746095}
   AN: {fileID: 7708745503070746090}
   NickNameText: {fileID: 7708745503081765031}
   HealthImage: {fileID: 1228984655910944424}
+  DeckLength: 0
+  DeckList: 
+  HandList: 
+  CemList: 
 --- !u!95 &7708745503070746090
 Animator:
   serializedVersion: 5
