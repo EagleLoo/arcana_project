@@ -6,6 +6,7 @@ using Photon.Realtime;
 public class Sword : MonoBehaviourPunCallbacks
 {
     public PhotonView PV;
+    public float damage;
     int dir;
 
     void Start()
@@ -17,7 +18,9 @@ public class Sword : MonoBehaviourPunCallbacks
     {
         if (!PV.IsMine && col.tag == "Player" && col.GetComponent<PhotonView>().IsMine)
         {
-            col.GetComponent<PlayerMove>().Hit();
+            damage = GameObject.FindWithTag("Player").GetComponent<PlayerMove>().Damage;
+            Debug.Log(damage);
+            col.GetComponent<PlayerMove>().Hit(damage);
         }
     }
 }

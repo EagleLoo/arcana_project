@@ -20,23 +20,26 @@ public class Card
     public bool isUsing;
     public int QuickNum;
 }
+
 public class CardManager : MonoBehaviour
 {
     public Toggle WarToggle;
     public TextAsset CardDatabase;
+    public TextAsset HandDatabase;
     public List<Card> AllCardList, MyCardList, CardDeckList; 
+    
     public Image Expand;
     public Image[] Slot;
     public Image[] QuickSlot;
+    public Image[] CardSlot;
     public Toggle[] UsingTog;
+    public Sprite Blank;
     public Sprite[] SACard;
     public Sprite[] HQCard;
     public Sprite[] QuickSlotStone;
     int[] QuickSlotNum = {-1, -1, -1, -1};
-    int[] Deck = new int[10];
-    int[] Hand, Cemetry;
-    public int CurNum, CardCnt;
-    int QNum;
+    public int CurNum;
+    int QNum, nNum;
     bool DeckEdit = true;
 
     void Start()
@@ -117,11 +120,9 @@ public class CardManager : MonoBehaviour
 
     // 활성화 된 카드들을 CardDeckList에 넣음
     public void StartDeck() {
-        CardCnt = 0;
         for (int i = 0; i < 10; i++)
             if (UsingTog[i].isOn) {
                 MyCardList[i].isUsing = true;
-                CardCnt++;
             }
 
         for (int i = 0; i < 4; i++)
@@ -133,5 +134,18 @@ public class CardManager : MonoBehaviour
         DeckEdit = false;
     }
 
-    
+    public void OnQuickSlotImage(int qNum, int cNum) 
+    {
+        CardSlot[qNum].GetComponent<Image>().sprite = WarToggle.isOn ? SACard[cNum] : HQCard[cNum];
+    }
+
+    public void OnNumSlotImage(int n, int cNum) 
+    {
+        CardSlot[n + 4].GetComponent<Image>().sprite = WarToggle.isOn ? SACard[cNum] : HQCard[cNum];
+    }
+
+    public void OffSlotImage(int sNum)
+    {
+        CardSlot[sNum].GetComponent<Image>().sprite = Blank;
+    }
 }

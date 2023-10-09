@@ -281,15 +281,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardList: []
+  _AllCardList: []
   PV: {fileID: 7708745503070746092}
   SR: {fileID: 7708745503070746095}
   AN: {fileID: 7708745503070746090}
   NickNameText: {fileID: 7708745503081765031}
   HealthImage: {fileID: 1228984655910944424}
-  DeckLength: 0
+  deckLength: 0
+  DL: 0
+  nNum: 0
   DeckList: 
-  HandList: 
   CemList: 
+  HandExistList: 
+  HandCardList: 
+  Damage: 0
 --- !u!95 &7708745503070746090
 Animator:
   serializedVersion: 5

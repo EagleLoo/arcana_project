@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance;
     public CardManager CM;
-    
+
     public TMP_InputField NickNameInput;
     public GameObject LoginPanel;
     public GameObject WinnerPanel;

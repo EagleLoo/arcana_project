@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1698661846459457762}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Sword
+  m_TagString: sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +138,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PV: {fileID: 3277571974873879097}
+  damage: 0
