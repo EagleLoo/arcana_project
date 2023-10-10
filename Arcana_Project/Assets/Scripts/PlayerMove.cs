@@ -65,7 +65,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         // 시간에 따라 카드 뽑기
         if(updateTime > drawTime)
         {
-            Debug.Log("draw");
             updateTime = 0.0f;
 
             
@@ -223,7 +222,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             curPos = (Vector3)stream.ReceiveNext();
             HealthImage.fillAmount = (float)stream.ReceiveNext();
         }
-        Debug.Log(damage);
     }
     // 마우스가 클릭한 방향으로 이동
     void CalTargetPos()
