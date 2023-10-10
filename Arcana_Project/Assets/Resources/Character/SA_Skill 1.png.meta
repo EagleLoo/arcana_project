@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 28c7c5a396cc5d6459c15663348bf40a
+guid: 41bc201a39a6f3742b7494ec203f6970
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,11 +105,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SA_Skill_0
+      name: SA_Skill 1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -119,18 +119,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebeed64f24f7ab2449ee7e32e378278e
-      internalID: -1158878914
+      spriteID: 5c81bf3b8be221640895db84e07f4f22
+      internalID: -1589480913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Skill_1
+      name: SA_Skill 1_1
       rect:
         serializedVersion: 2
         x: 64
-        y: 192
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -140,18 +140,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17a42e0aa4f061141a40ea4bcfb9971f
-      internalID: 1141377246
+      spriteID: 00292d56063ca2c4899664134d651420
+      internalID: 1291136204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Skill_2
+      name: SA_Skill 1_2
       rect:
         serializedVersion: 2
         x: 128
-        y: 192
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -161,18 +161,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2283d96ed9a8cd84180f611c4e9b2620
-      internalID: -774534058
+      spriteID: 9752c57a3de3b3b4d8f5161e8d3a49cc
+      internalID: 932722319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Skill_3
+      name: SA_Skill 1_3
       rect:
         serializedVersion: 2
         x: 192
-        y: 192
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -182,18 +182,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9177d4065793b494da7bef3a1a1a9437
-      internalID: -1694256488
+      spriteID: 421cc2cebdfd96b48b860531a4b03283
+      internalID: -1792458635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Skill_4
+      name: SA_Skill 1_4
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -203,18 +203,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d53b5c73ff1d5d441b1fe90e91bc5d92
-      internalID: -2128108758
+      spriteID: c94d7f48128d43947967258591d78d5c
+      internalID: -929345921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Skill_5
+      name: SA_Skill 1_5
       rect:
         serializedVersion: 2
         x: 64
-        y: 128
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -224,18 +224,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccd56da252b1ad440a867117ad23a8e6
-      internalID: 1479368219
+      spriteID: 53f863d0d43377349835e40b24d2bfed
+      internalID: -1008293949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SA_Skill_6
+      name: SA_Skill 1_6
       rect:
         serializedVersion: 2
         x: 128
-        y: 128
+        y: 0
         width: 64
         height: 64
       alignment: 0
@@ -245,8 +245,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d1d56561e6c42b4188758e77eee3a3e
-      internalID: 367543232
+      spriteID: 915ddf5c7d8d7e742be0b9ed874abf18
+      internalID: -820143104
       vertices: []
       indices: 
       edges: []
@@ -262,13 +262,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SA_Skill_0: -1158878914
-      SA_Skill_1: 1141377246
-      SA_Skill_2: -774534058
-      SA_Skill_3: -1694256488
-      SA_Skill_4: -2128108758
-      SA_Skill_5: 1479368219
-      SA_Skill_6: 367543232
+      SA_Skill 1_0: -1589480913
+      SA_Skill 1_1: 1291136204
+      SA_Skill 1_2: 932722319
+      SA_Skill 1_3: -1792458635
+      SA_Skill 1_4: -929345921
+      SA_Skill 1_5: -1008293949
+      SA_Skill 1_6: -820143104
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

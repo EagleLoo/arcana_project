@@ -7,6 +7,7 @@ TagManager:
   - Slot
   - CardManager
   - sword
+  - Swamp
   layers:
   - Default
   - TransparentFX

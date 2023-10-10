@@ -40,7 +40,7 @@ public class CardManager : MonoBehaviour
     int[] QuickSlotNum = {-1, -1, -1, -1};
     public int CurNum;
     int QNum, nNum;
-    bool DeckEdit = true;
+
 
     void Start()
     {
@@ -53,28 +53,27 @@ public class CardManager : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if(DeckEdit) {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                QNum = 0;
-                QuickResist(QNum);
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                QNum = 1;
-                QuickResist(QNum);
-            }
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                QNum = 2;
-                QuickResist(QNum);
-            }
-            else if (Input.GetKeyDown(KeyCode.R))
-            {
-                QNum = 3;
-                QuickResist(QNum);
-            }    
+        
+        if (Input.GetKey(KeyCode.Q))
+        {
+            QNum = 0;
+            QuickResist(QNum);
         }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            QNum = 1;
+            QuickResist(QNum);
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            QNum = 2;
+            QuickResist(QNum);
+        }
+        else if (Input.GetKey(KeyCode.R))
+        {
+            QNum = 3;
+            QuickResist(QNum);
+        }    
     }
 
     // 내가 선택한 캐릭터의 카드만 불러오기
@@ -131,7 +130,6 @@ public class CardManager : MonoBehaviour
             }
         CardDeckList = MyCardList.FindAll(x => x.isUsing == true);
 
-        DeckEdit = false;
     }
 
     public void OnQuickSlotImage(int qNum, int cNum) 

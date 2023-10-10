@@ -14,24 +14,24 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public List<Card> CardList, _AllCardList;
     public PhotonView PV;
     public SpriteRenderer SR;
+    public Rigidbody2D RB;
     public Animator AN;
     public TMP_Text NickNameText;
     public Image HealthImage;
-    Vector3 mousePos, transPos, targetPos;
-    Vector3 curPos;
+    Vector3 mousePos, transPos, targetPos, curPos;
     float drawTime, updateTime = 0.0f;
-    public int deckLength, DL, nNum;
+    public int deckLength, DL, nNum, speed, damage, extraDamage, enemyDamage;
     public List<int> DeckList = new List<int>();
     public List<int> CemList = new List<int>(); 
     public List<bool> HandExistList = new List<bool> ();
     public List<int> HandCardList = new List<int> ();
-    public float Damage;
-    bool role;
-
+    bool role, block, enemyBlock, paint = true, con = true;
+    int MeteorCountDown = 0;
     void Awake()
     {
         // 타겟을 현재 위치로 하여 고정
         targetPos = this.transform.position;
+        speed = 3;
 
         // 자신의 닉네임은 초록색, 적의 닉네임은 빨간색
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
@@ -46,6 +46,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         for (int i = 0; i < deckLength; i++) 
         {
             DeckList.Add(CardList[i].CardNum);
+        }
+        for (int i = 0; i < 8; i++)
+        {
             HandExistList.Add(false);
             HandCardList.Add(-1);
         }
@@ -53,9 +56,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         Shuffle(DeckList);
 
         if (role)
-            drawTime = 5.0f;
+            drawTime = 4.0f;
         else
-            drawTime = 8.0f; 
+            drawTime = 5.0f; 
     }
 
     void Update() {
@@ -79,65 +82,67 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         // 마우스 클릭했을 때 나의 캐릭터만 CalTargetPos() 실행
         if (PV.IsMine)
         {
-            if(Input.GetMouseButton(1))
-            CalTargetPos();
-            Vector2 dis = targetPos - transform.position;
+            if (con && paint) {
+                if(Input.GetMouseButton(1))
+                CalTargetPos();
+                Vector2 dis = targetPos - transform.position;
             
-            if (dis.magnitude != 0)
-            {
-                AN.SetBool("walk", true);
-                PV.RPC("FlipXRPC", RpcTarget.AllBuffered, dis.x);
-            }
-            else AN.SetBool("walk", false);
+                if (dis.magnitude != 0)
+                {
+                    AN.SetBool("walk", true);
+                    PV.RPC("FlipXRPC", RpcTarget.AllBuffered, dis.x);
+                }
+                else AN.SetBool("walk", false);
             
 
-            if (Input.GetKeyDown(KeyCode.Q) && HandExistList[0])
-            {
-                SkillCast(role, HandCardList[0]);
-                RemoveHand(0);
-            }
-            else if (Input.GetKeyDown(KeyCode.W) && HandExistList[1])
-            {
-                SkillCast(role, HandCardList[1]);
-                RemoveHand(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && HandExistList[2])
-            {
-                SkillCast(role, HandCardList[2]);
-                RemoveHand(2);
-            }
-            else if (Input.GetKeyDown(KeyCode.R) && HandExistList[3])
-            {
-                SkillCast(role, HandCardList[3]);
-                RemoveHand(3);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha1) && HandExistList[4])
-            {
-                SkillCast(role, HandCardList[4]);
-                RemoveHand(4);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2) && HandExistList[5])
-            {
-                SkillCast(role, HandCardList[5]);
-                RemoveHand(5);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3) && HandExistList[6])
-            {
-                SkillCast(role, HandCardList[6]);
-                RemoveHand(6);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha4) && HandExistList[7])
-            {
-                SkillCast(role, HandCardList[7]);
-                RemoveHand(7);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha5) && HandExistList[8])
-            {
-                SkillCast(role, HandCardList[8]);
-                RemoveHand(8);
-            }
+                if (Input.GetKeyDown(KeyCode.Q) && HandExistList[0])
+                {
+                    SkillCast(HandCardList[0]);
+                    RemoveHand(0);
+                }
+                else if (Input.GetKeyDown(KeyCode.W) && HandExistList[1])
+                {
+                    SkillCast(HandCardList[1]);
+                    RemoveHand(1);
+                }
+                else if (Input.GetKeyDown(KeyCode.E) && HandExistList[2])
+                {
+                    SkillCast(HandCardList[2]);
+                    RemoveHand(2);
+                }
+                else if (Input.GetKeyDown(KeyCode.R) && HandExistList[3])
+                {
+                    SkillCast(HandCardList[3]);
+                    RemoveHand(3);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha1) && HandExistList[4])
+                {
+                    SkillCast(HandCardList[4]);
+                    RemoveHand(4);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha2) && HandExistList[5])
+                {
+                    SkillCast(HandCardList[5]);
+                    RemoveHand(5);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3) && HandExistList[6])
+                {
+                    SkillCast(HandCardList[6]);
+                    RemoveHand(6);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha4) && HandExistList[7])
+                {
+                    SkillCast(HandCardList[7]);
+                    RemoveHand(7);
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha5) && HandExistList[8])
+                {
+                    SkillCast( HandCardList[8]);
+                    RemoveHand(8);
+                }
             
-            MoveToTarget();
+                MoveToTarget();
+            }
         }
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
@@ -146,13 +151,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void FlipXRPC(float x)
     {
-     SR.flipX = x < 0;
+        SR.flipX = x < 0;
     }
 
-  
-    public void Hit(float damage)
+    public void Hit()
     {
-        HealthImage.fillAmount -= damage;
+        HealthImage.fillAmount -= enemyDamage;
         if (HealthImage.fillAmount <= 0)
         {
             // 상대에게 승리화면 출력
@@ -160,6 +164,35 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             GameObject.Find("Canvas").transform.Find("LosePanel").gameObject.SetActive(true);
             PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
         }
+
+        if (enemyBlock) {
+            paint = false;
+            Invoke ("WakeUp", 1f);
+        }
+    }
+
+    public void IceHit()
+    {
+        HealthImage.fillAmount -= 10;
+        if (HealthImage.fillAmount <= 0)
+        {
+            // 상대에게 승리화면 출력
+            PV.RPC("Referee", RpcTarget.Others);  
+            GameObject.Find("Canvas").transform.Find("LosePanel").gameObject.SetActive(true);
+            PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
+        }
+        speed = 1;
+        Invoke ("Slow", 1f);
+    }
+
+    public void Swamp()
+    {
+        speed = 1;
+    }
+
+    public void WakeUp() {
+        paint = true;
+        enemyBlock = false;
     }
 
     [PunRPC]
@@ -174,13 +207,18 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        
         if (stream.IsWriting)
         {
+            stream.SendNext(damage + extraDamage);
+            stream.SendNext(block);
             stream.SendNext(transform.position);
             stream.SendNext(HealthImage.fillAmount);
         }
         else
         {
+            enemyDamage = (int)stream.ReceiveNext();
+            enemyBlock = (bool)stream.ReceiveNext();
             curPos = (Vector3)stream.ReceiveNext();
             HealthImage.fillAmount = (float)stream.ReceiveNext();
         }
@@ -195,7 +233,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     void MoveToTarget()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 4);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
     }  
 
     // 카드 셔플 함수
@@ -215,27 +253,29 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     // 손패 리스트에 더하는 함수
     public void AddHand(int cNum) 
     {
+       
         for (int i = 0; i < deckLength; i++) {
             if (cNum == CardList[i].CardNum)
                 nNum = i;
         }
         int qNum = CardList[nNum].QuickNum;
-        print(qNum);
-
+        
         if (qNum >= 0) 
         {   // 퀵슬롯 등록
-            GameObject.Find("CardArea").GetComponent<CardManager>().OnQuickSlotImage(qNum, cNum);
+
             HandExistList[qNum] = true;
             HandCardList[qNum] = cNum;
+            if (cNum > 8) cNum+=MeteorCountDown;
+            GameObject.Find("CardArea").GetComponent<CardManager>().OnQuickSlotImage(qNum, cNum);
         }
         else
         {   // 숫자슬롯 등록 
             for (int i = 0; i < 4; i++) {
                 if (!HandExistList[i+4]) {
-                    GameObject.Find("CardArea").GetComponent<CardManager>().OnNumSlotImage(i, cNum);
-
                     HandExistList[i+4] = true;
                     HandCardList[i+4] = cNum;
+                    if (cNum > 8) cNum+=MeteorCountDown;
+                    GameObject.Find("CardArea").GetComponent<CardManager>().OnNumSlotImage(i, cNum);
                     break;
             }
         }
@@ -253,7 +293,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     
     public void Cemetry() 
     {
-        // 덱이 모두 소모되면 묘지에서 가져온다.\
+        // 덱이 모두 소모되면 묘지에서 가져온다.
         int n = CemList.Count;
         for (int i = 0; i < n; i++) {
             DeckList.Add(CemList[i]);
@@ -264,64 +304,185 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 
-    public void SkillCast(bool isSA, int cNum) 
+    public void SkillCast(int cNum) 
     {
+        extraDamage = 0;
+        block = false;
+        
         if(role)
             switch (cNum) {
-            case 0:
+            case 0: // 가로베기
+                damage = 10;
                 AN.SetTrigger("HorizonLob");
-                Damage = _AllCardList[0].Power;
-                Lob();
+                Attack();
                 break;
-            case 1:
+            case 1: // 질주
+                speed = 6;
+                Invoke("Slow", 0.5f);
                 break;
-            case 2:
+            case 2: // 근력 강화
+                extraDamage = 7;
                 break;
-            case 3:
+            case 3: // 지진
+                damage = 5;
+                block = true;
+                AN.SetTrigger("Earthquake");
+                // earthquake();
                 break;
-            case 4:
+            case 4: // 강타
+                damage = 7;
+                block = true;
+                AN.SetTrigger("HorizonLob");
+                Attack();
+
                 break;
-            case 5:
+            case 5: // 흡혈
+                damage = 7;
+                Attack();
+                HealthImage.fillAmount += 5;
                 break;
-            case 6:
+            case 6: // 돌진
+                Dash();
                 break;
-            case 7:
+            case 7: // 세로베기
+                con = false;
+                Invoke("Concept", 1f);
+                damage = 20;
+                AN.SetTrigger("VerticalLob");
+                Attack();
                 break;
-            case 8:
+            case 8: // 방어      
+                gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+                Invoke("defense", 0.1f);
                 break;
-            case 9:
+            case 9: // 벼락
+                damage = 20;
+                AN.SetTrigger("Lightning");
+                Attack();
+                RemoveHandAll(cNum);
                 break;
             }
         else
             switch (cNum) {
-            case 0:
+            case 0: // 서리화살
+                AN.SetTrigger("Shoot");
+                Ice();
                 break;
-            case 1:
+            case 1: // 바위벽
+                AN.SetTrigger("Summon");
+                PhotonNetwork.Instantiate("Rock", targetPos, Quaternion.identity);
                 break;
-            case 2:
+            case 2: // 파이어볼
+                damage = 15;
+                AN.SetTrigger("Shoot");
+                Fire();
+                break;  
+            case 3: // 주문강화
+                extraDamage = 7;
                 break;
-            case 3:
+            case 4: // 블링크
+                AN.SetTrigger("Blink");
+                transform.position = targetPos;
                 break;
-            case 4:
+            case 5: // 스웜프
+                AN.SetTrigger("Summon");
+                PhotonNetwork.Instantiate("Swamp", targetPos, Quaternion.identity);
                 break;
-            case 5:
+            case 6: // 스파크
+                AN.SetTrigger("Shoot");
+                damage = 0;
+                block = true;
+                Attack();
                 break;
-            case 6:
+            case 7: // 사고가속
+                drawTime = 3.0f;
+                Invoke("TimeAccel", 3f);
+                break; 
+            case 8: // 섬광
+                AN.SetTrigger("Shoot");
+                damage = 20;
+                Light();
                 break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
+            case 9: // 메테오 
+                AN.SetTrigger("Casting");
+                MeteorCasting();
                 break;
             }
     }
-    public void Lob()
+    public void Attack()
     {
         PhotonNetwork.Instantiate("Sword", transform.position + new Vector3(SR.flipX ? -0.5f : 0.5f, -0.11f, 0), Quaternion.identity);
-   
+
         targetPos = transform.position;
     }
+
+    public void Slow()
+    {
+        speed = 3;
+    }
+
+    public void Dash()
+    {
+        CalTargetPos();
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 200);
+    }
+
+    public void defense()
+    {
+        gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
+    }
+
+    public void TimeAccel()
+    {
+        drawTime = 5.0f;
+    }
+
+    public void Freeze()
+    {
+        RB.constraints = RigidbodyConstraints2D.None;
+    }
+
+
+    public void Ice()
+    {
+        PhotonNetwork.Instantiate("Ice", transform.position + new Vector3(SR.flipX ? -0.4f : 0.4f, -0.11f, 0), Quaternion.identity).GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, SR.flipX ? -1 : 1);
+    }
+
+    public void Fire()
+    {
+        PhotonNetwork.Instantiate("Fire", transform.position + new Vector3(SR.flipX ? -0.4f : 0.4f, -0.11f, 0), Quaternion.identity).GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, SR.flipX ? -1 : 1);
+    }
+
+    public void Light()
+    {
+        PhotonNetwork.Instantiate("Light", transform.position + new Vector3(SR.flipX ? -4.5f : 4.5f, -0.11f, 0), Quaternion.identity).GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, SR.flipX ? -1 : 1);
+    }
+
+    public void MeteorCasting() 
+    {
+        MeteorCountDown++;
+
+        if (MeteorCountDown == 4)
+            PV.RPC("Meteor", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    public void Meteor() {
+        HealthImage.fillAmount -= 50;
+    }
+
+    public void RemoveHandAll(int cNum)
+    {
+        for (int i = 0; i < 8; i++)
+            if(HandExistList[i] = true && HandCardList[i] != cNum) {
+                HandExistList[i] = false;
+                CemList.Add(HandCardList[i]);
+                HandCardList[i] = -1;
+        
+                GameObject.Find("CardArea").GetComponent<CardManager>().OffSlotImage(i);
+            }
+    }
+
 }
 
     // -------------------------------------------- 전사 스킬 --------------------------------------------
