@@ -56,9 +56,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         Shuffle(DeckList);
 
         if (role)
-            drawTime = 6.0f;
+            drawTime = 4.0f;
         else
-            drawTime = 9.0f; 
+            drawTime = 6.0f; 
     }
 
     void Update() {
@@ -158,7 +158,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Hit()
     {
-        HealthImage.fillAmount -= damage * 0.01f;
+        HealthImage.fillAmount -= damage * 0.02f;
         if (HealthImage.fillAmount <= 0)
         {
             // 상대에게 승리화면 출력
@@ -175,7 +175,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void IceHit()
     {
-        HealthImage.fillAmount -= 0.1f;
+        HealthImage.fillAmount -= 0.2f;
         if (HealthImage.fillAmount <= 0)
         {
             // 상대에게 승리화면 출력
@@ -345,10 +345,8 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 break;
             case 7: // 세로베기
                 damage = 20f;
-                RB.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionY;
                 AN.SetTrigger("VerticalLob");
                 Attack();
-                Invoke("Freeze", 0.5f);
                 break;
             case 8: // 방어      
                 gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
@@ -429,10 +427,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
     }
 
-    public void Freeze()
-    {
-        RB.constraints = ~RigidbodyConstraints2D.FreezePositionX | ~RigidbodyConstraints2D.FreezePositionY; 
-    }
     public void TimeAccel()
     {
         drawTime = 9.0f;
