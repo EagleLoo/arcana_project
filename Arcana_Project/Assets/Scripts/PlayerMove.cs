@@ -19,13 +19,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public TMP_Text NickNameText;
     public Image HealthImage;
     Vector3 mousePos, transPos, targetPos, curPos;
-    float drawTime, updateTime = 0.0f;
-    public int deckLength, DL, nNum, speed, damage, extraDamage, enemyDamage;
+    float drawTime, updateTime = 0.0f, damage, extraDamage, enemyDamage;
+    public int deckLength, DL, nNum, speed;
     public List<int> DeckList = new List<int>();
     public List<int> CemList = new List<int>(); 
     public List<bool> HandExistList = new List<bool> ();
     public List<int> HandCardList = new List<int> ();
-    bool role, block, enemyBlock, paint = true, con = true;
+    bool role, block, enemyBlock, paint = true;
     int MeteorCountDown = 0;
     void Awake()
     {
@@ -56,9 +56,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         Shuffle(DeckList);
 
         if (role)
-            drawTime = 4.0f;
+            drawTime = 6.0f;
         else
-            drawTime = 5.0f; 
+            drawTime = 9.0f; 
     }
 
     void Update() {
@@ -68,11 +68,14 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             Debug.Log("draw");
             updateTime = 0.0f;
 
+            
             AddHand(DeckList[DL]);
             DeckList.RemoveAt(DL--);
 
-            if (DL < 0)
-                Cemetry();    
+            if (DL < 0) {
+                Shuffle(DeckList);
+                Cemetry();
+            }    
         }
         else updateTime += Time.deltaTime;
 
@@ -82,7 +85,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         // 마우스 클릭했을 때 나의 캐릭터만 CalTargetPos() 실행
         if (PV.IsMine)
         {
-            if (con && paint) {
+            if (paint) {
                 if(Input.GetMouseButton(1))
                 CalTargetPos();
                 Vector2 dis = targetPos - transform.position;
@@ -156,7 +159,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Hit()
     {
-        HealthImage.fillAmount -= enemyDamage;
+        HealthImage.fillAmount -= damage * 0.01f;
         if (HealthImage.fillAmount <= 0)
         {
             // 상대에게 승리화면 출력
@@ -173,7 +176,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void IceHit()
     {
-        HealthImage.fillAmount -= 10;
+        HealthImage.fillAmount -= 0.1f;
         if (HealthImage.fillAmount <= 0)
         {
             // 상대에게 승리화면 출력
@@ -211,17 +214,16 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(damage + extraDamage);
-            stream.SendNext(block);
             stream.SendNext(transform.position);
             stream.SendNext(HealthImage.fillAmount);
         }
         else
         {
-            enemyDamage = (int)stream.ReceiveNext();
-            enemyBlock = (bool)stream.ReceiveNext();
+            damage = (float)stream.ReceiveNext();
             curPos = (Vector3)stream.ReceiveNext();
             HealthImage.fillAmount = (float)stream.ReceiveNext();
         }
+        Debug.Log(damage);
     }
     // 마우스가 클릭한 방향으로 이동
     void CalTargetPos()
@@ -253,7 +255,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     // 손패 리스트에 더하는 함수
     public void AddHand(int cNum) 
     {
-       
+        // 
         for (int i = 0; i < deckLength; i++) {
             if (cNum == CardList[i].CardNum)
                 nNum = i;
@@ -306,13 +308,13 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SkillCast(int cNum) 
     {
-        extraDamage = 0;
+        extraDamage = 0f;
         block = false;
         
         if(role)
             switch (cNum) {
             case 0: // 가로베기
-                damage = 10;
+                damage = 10f;
                 AN.SetTrigger("HorizonLob");
                 Attack();
                 break;
@@ -321,42 +323,41 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 Invoke("Slow", 0.5f);
                 break;
             case 2: // 근력 강화
-                extraDamage = 7;
+                extraDamage = 7f;
                 break;
             case 3: // 지진
-                damage = 5;
+                damage = 5f;
                 block = true;
                 AN.SetTrigger("Earthquake");
                 // earthquake();
                 break;
             case 4: // 강타
-                damage = 7;
+                damage = 7f;
                 block = true;
                 AN.SetTrigger("HorizonLob");
                 Attack();
-
                 break;
             case 5: // 흡혈
-                damage = 7;
+                damage = 7f;
                 Attack();
-                HealthImage.fillAmount += 5;
+                HealthImage.fillAmount += 0.05f;
                 break;
             case 6: // 돌진
                 Dash();
                 break;
             case 7: // 세로베기
-                con = false;
-                Invoke("Concept", 1f);
-                damage = 20;
+                damage = 20f;
+                RB.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionY;
                 AN.SetTrigger("VerticalLob");
                 Attack();
+                Invoke("Freeze", 0.5f);
                 break;
             case 8: // 방어      
                 gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
-                Invoke("defense", 0.1f);
+                Invoke("Defense", 0.1f);
                 break;
             case 9: // 벼락
-                damage = 20;
+                damage = 20f;
                 AN.SetTrigger("Lightning");
                 Attack();
                 RemoveHandAll(cNum);
@@ -373,12 +374,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 PhotonNetwork.Instantiate("Rock", targetPos, Quaternion.identity);
                 break;
             case 2: // 파이어볼
-                damage = 15;
+                damage = 15f;
                 AN.SetTrigger("Shoot");
                 Fire();
                 break;  
             case 3: // 주문강화
-                extraDamage = 7;
+                extraDamage = 7f;
                 break;
             case 4: // 블링크
                 AN.SetTrigger("Blink");
@@ -390,17 +391,17 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 break;
             case 6: // 스파크
                 AN.SetTrigger("Shoot");
-                damage = 0;
+                damage = 5f;
                 block = true;
                 Attack();
                 break;
             case 7: // 사고가속
-                drawTime = 3.0f;
+                drawTime = 6.0f;
                 Invoke("TimeAccel", 3f);
                 break; 
             case 8: // 섬광
                 AN.SetTrigger("Shoot");
-                damage = 20;
+                damage = 20f;
                 Light();
                 break;
             case 9: // 메테오 
@@ -412,8 +413,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public void Attack()
     {
         PhotonNetwork.Instantiate("Sword", transform.position + new Vector3(SR.flipX ? -0.5f : 0.5f, -0.11f, 0), Quaternion.identity);
-
-        targetPos = transform.position;
     }
 
     public void Slow()
@@ -427,21 +426,19 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 200);
     }
 
-    public void defense()
+    public void Defense()
     {
         gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
     }
 
-    public void TimeAccel()
-    {
-        drawTime = 5.0f;
-    }
-
     public void Freeze()
     {
-        RB.constraints = RigidbodyConstraints2D.None;
+        RB.constraints = ~RigidbodyConstraints2D.FreezePositionX | ~RigidbodyConstraints2D.FreezePositionY; 
     }
-
+    public void TimeAccel()
+    {
+        drawTime = 9.0f;
+    }
 
     public void Ice()
     {
@@ -463,12 +460,12 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         MeteorCountDown++;
 
         if (MeteorCountDown == 4)
-            PV.RPC("Meteor", RpcTarget.Others);
+            PV.RPC("Meteor", RpcTarget.Others, 0.5f);
     }
 
     [PunRPC]
-    public void Meteor() {
-        HealthImage.fillAmount -= 50;
+    public void Meteor(float dam) {
+        HealthImage.fillAmount -= dam;
     }
 
     public void RemoveHandAll(int cNum)
