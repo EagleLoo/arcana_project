@@ -6,16 +6,24 @@ using TMPro;
 using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
+[System.Serializable]
+public class Serialization<T>
+{
+    public Serialization(List<T> _Target) => _Target = _Target;
+    public List<T> target;
+}
 
 [System.Serializable]
 public class Card
 {
-    public Card(string _Type, int _CardNum, string _Name, float _Power, float _Range, string _Description, bool _isUsing, int _QuickNum)
-    {Type = _Type; CardNum = _CardNum; Name = _Name; Power = _Power; Range = _Range; Description = _Description; isUsing = _isUsing; QuickNum = _QuickNum;}
+    public Card(string _Type, int _CardNum, string _Name, float _Power, string _Description, bool _isUsing, int _QuickNum)
+    {Type = _Type; CardNum = _CardNum; Name = _Name; Power = _Power; Description = _Description; isUsing = _isUsing; QuickNum = _QuickNum;}
     public string Type;
     public int CardNum;
     public string Name;
-    public float Power, Range;
+    public float Power;
     public string Description;   
     public bool isUsing;
     public int QuickNum;
@@ -25,74 +33,104 @@ public class CardManager : MonoBehaviour
 {
     public Toggle WarToggle;
     public TextAsset CardDatabase;
-    public TextAsset HandDatabase;
-    public List<Card> AllCardList, MyCardList, CardDeckList; 
-    
+    public List<Card> AllCardList, MyCardList, CurCardList, CardDeckList, QuickSlotList; 
     public Image Expand;
-    public Image[] Slot;
-    public Image[] QuickSlot;
-    public Image[] CardSlot;
+    public Image[] Slot, QuickSlot, CardSlot;
     public Toggle[] UsingTog;
     public Sprite Blank;
-    public Sprite[] SACard;
-    public Sprite[] HQCard;
-    public Sprite[] QuickSlotStone;
+    public Sprite[] SACard, HQCard, QuickSlotStone;
     int[] QuickSlotNum = {-1, -1, -1, -1};
     public int CurNum;
-    int QNum, nNum;
-
-
+    int nNum;
+    string filePath, curType;
+    
     void Start()
     {
         string[] line = CardDatabase.text.Substring(0, CardDatabase.text.Length - 1).Split('\n');
         for (int i = 0; i < line.Length; i++)
         {
              string[] row = line[i].Split('\t');
-             AllCardList.Add(new Card(row[0], int.Parse(row[1]), row[2], float.Parse(row[3]), float.Parse(row[4]), row[5], row[6] == "TRUE", int.Parse(row[7])));
+             AllCardList.Add(new Card(row[0], int.Parse(row[1]), row[2], float.Parse(row[3]), row[4], row[5] == "TRUE", int.Parse(row[6])));
         }
+
+        filePath = Application.persistentDataPath + "/MyCardText.txt";
+        print(filePath);
+        Load();
     }
 
     void FixedUpdate() {
         
         if (Input.GetKey(KeyCode.Q))
         {
-            QNum = 0;
-            QuickResist(QNum);
+            QuickResist(0);
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            QNum = 1;
-            QuickResist(QNum);
+            QuickResist(1);
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            QNum = 2;
-            QuickResist(QNum);
+            QuickResist(2);
         }
         else if (Input.GetKey(KeyCode.R))
         {
-            QNum = 3;
-            QuickResist(QNum);
+            QuickResist(3);
         }    
+    }
+
+    public void TabClick()
+    {
+        for (int i = 0; i < 10; i++)
+        ;
+    }
+
+    public void ResetCardClick()
+    {
+        Card BasicCard = AllCardList.Find(x => x.CardNum == 0);
+        BasicCard.isUsing = true;
+        MyCardList = new List<Card>() {BasicCard};
+        Save();
+        Load();
+    }
+
+    void Save()
+    {
+        MyCardList.Add(AllCardList[0]);
+        MyCardList.Add(AllCardList[1]);
+        string jdata = JsonUtility.ToJson(new Serialization<Card>(MyCardList));
+        File.WriteAllText(filePath, jdata);
+
+        TabClick();
+    }
+
+    void Load()
+    {
+        if (!File.Exists(filePath)) { ResetCardClick(); return; }
+        string jdata = File.ReadAllText(filePath);
+        MyCardList = JsonUtility.FromJson<Serialization<Card>>(jdata).target;
+
+        TabClick();
     }
 
     // 내가 선택한 캐릭터의 카드만 불러오기
     public void MyDeck()
     {
-        string tog;
-        if (WarToggle.isOn)
-            tog = "SA";
-        else
-            tog = "HQ";
-        MyCardList = AllCardList.FindAll(x => x.Type == tog);
-
-        for (int i = 0; i < 10; i++) {
-            
-            if (tog == "SA")
+        string tabName;
+        // 현재 아이템 리스트에 클릭한 타입만 추가
+        if (WarToggle) 
+        {
+            tabName = "SA";
+            for (int i = 0; i < 10; i++)
                 Slot[i].sprite = SACard[i];
-            else
-                Slot[i].sprite = HQCard[i]; 
         }
+        else
+        {
+            tabName = "HQ";
+            for (int i = 0; i < 10; i++)
+                Slot[i].sprite = HQCard[i];
+        }
+
+        MyCardList = AllCardList.FindAll(x => x.Type == tabName);
     }
 
     // 카드 설명 확장

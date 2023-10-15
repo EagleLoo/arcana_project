@@ -25,7 +25,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public List<int> CemList = new List<int>(); 
     public List<bool> HandExistList = new List<bool> ();
     public List<int> HandCardList = new List<int> ();
-    bool role, block, enemyBlock, paint = true;
+    bool role, paint = true;
     int MeteorCountDown = 0;
     void Awake()
     {
@@ -166,11 +166,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             GameObject.Find("Canvas").transform.Find("LosePanel").gameObject.SetActive(true);
             PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
         }
-
-        if (enemyBlock) {
-            paint = false;
-            Invoke ("WakeUp", 1f);
-        }
     }
 
     public void IceHit()
@@ -190,11 +185,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public void Swamp()
     {
         speed = 1;
-    }
-
-    public void WakeUp() {
-        paint = true;
-        enemyBlock = false;
     }
 
     [PunRPC]
@@ -307,7 +297,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public void SkillCast(int cNum) 
     {
         extraDamage = 0f;
-        block = false;
         
         if(role)
             switch (cNum) {
@@ -325,13 +314,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 break;
             case 3: // 지진
                 damage = 5f;
-                block = true;
                 AN.SetTrigger("Earthquake");
                 // earthquake();
                 break;
             case 4: // 강타
                 damage = 7f;
-                block = true;
                 AN.SetTrigger("HorizonLob");
                 Attack();
                 break;
@@ -388,7 +375,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             case 6: // 스파크
                 AN.SetTrigger("Shoot");
                 damage = 5f;
-                block = true;
                 Attack();
                 break;
             case 7: // 사고가속
@@ -473,15 +459,3 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 }
-
-    // -------------------------------------------- 전사 스킬 --------------------------------------------
-   
-    
-        
-
-
-    // -------------------------------------------- 마법사 스킬 ------------------------------------------
-
-
-
-

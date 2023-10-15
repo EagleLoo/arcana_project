@@ -12,7 +12,7 @@ public class Ice : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        SR.flipX = dir < 0;
+        SR.flipX = dir > 0;
         Destroy(gameObject, 3.5f);
     }
 
