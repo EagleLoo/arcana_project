@@ -26,7 +26,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
     public List<bool> HandExistList = new List<bool> ();
     public List<int> HandCardList = new List<int> ();
     bool role, paint = true;
-    int MeteorCountDown = 0;
+    int MeteorCount = 0;
     void Awake()
     {
         // 타겟을 현재 위치로 하여 고정
@@ -38,7 +38,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
 
         CardList = GameObject.Find("CardArea").GetComponent<CardManager>().CardDeckList;
-        _AllCardList = GameObject.Find("CardArea").GetComponent<CardManager>().AllCardList;
         deckLength = CardList.Count;
         DL = deckLength - 1;
         role = CardList[0].Type == "SA";
@@ -67,7 +66,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         {
             updateTime = 0.0f;
 
-            
             AddHand(DeckList[DL]);
             DeckList.RemoveAt(DL--);
 
@@ -213,7 +211,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
             HealthImage.fillAmount = (float)stream.ReceiveNext();
         }
     }
-    // 마우스가 클릭한 방향으로 이동
+    // 마우스 위치 정보
     void CalTargetPos()
     {
         mousePos = Input.mousePosition;
@@ -240,7 +238,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
         return _list;
     }
 
-    // 손패 리스트에 더하는 함수
+    // 손패 리스트에 카드를 더하는 함수
     public void AddHand(int cNum) 
     {
         // 
@@ -255,19 +253,21 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
             HandExistList[qNum] = true;
             HandCardList[qNum] = cNum;
-            if (cNum > 8) cNum+=MeteorCountDown;
+            if (cNum > 8) cNum+=MeteorCount;
             GameObject.Find("CardArea").GetComponent<CardManager>().OnQuickSlotImage(qNum, cNum);
         }
         else
         {   // 숫자슬롯 등록 
-            for (int i = 0; i < 4; i++) {
+            int i = 0;
+            for (; i < 4; i++) {
                 if (!HandExistList[i+4]) {
                     HandExistList[i+4] = true;
                     HandCardList[i+4] = cNum;
-                    if (cNum > 8) cNum+=MeteorCountDown;
+                    if (cNum > 8) cNum+=MeteorCount;
                     GameObject.Find("CardArea").GetComponent<CardManager>().OnNumSlotImage(i, cNum);
                     break;
             }
+           
         }
         }
     }  
@@ -378,7 +378,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
                 Attack();
                 break;
             case 7: // 사고가속
-                drawTime = 6.0f;
+                drawTime = 3.0f;
                 Invoke("TimeAccel", 3f);
                 break; 
             case 8: // 섬광
@@ -415,7 +415,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TimeAccel()
     {
-        drawTime = 9.0f;
+        drawTime = 6.0f;
     }
 
     public void Ice()
@@ -435,9 +435,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks, IPunObservable
 
     public void MeteorCasting() 
     {
-        MeteorCountDown++;
+        MeteorCount++;
 
-        if (MeteorCountDown == 4)
+        if (MeteorCount == 4)
             PV.RPC("Meteor", RpcTarget.Others, 0.5f);
     }
 
